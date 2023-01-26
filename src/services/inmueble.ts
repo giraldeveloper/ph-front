@@ -1,4 +1,4 @@
-interface inmuebleI {
+interface IGetInmueble {
   "id": string;
   "bloque": string;
   "numero": string;
@@ -11,13 +11,17 @@ interface inmuebleI {
 
 export class Inmuebles {
 
-  public static getInmuebles(): Promise<inmuebleI[]> {
+  public static getInmuebles(): Promise<IGetInmueble[]> {
     return fetch('http://localhost:3000/v1/inmueble')
       .then(res => res.json())
       .then(response => {
         const { data } = response
         return data
       })
+  }
+
+  public static createInmueble() {
 
   }
+
 }

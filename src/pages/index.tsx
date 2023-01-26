@@ -1,6 +1,7 @@
 import Head from 'next/head'
+import Link from 'next/link'
 
-export default function Home() {
+export default function Home(): JSX.Element {
 
   return (
     <>
@@ -11,7 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-
+        <Link href='/inmueble'>inmueble</Link>
       </main>
     </>
   )

@@ -1,6 +1,25 @@
+:root {
+  --content-background: #fdfdfd;
+  --radius: 10px;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background: #f8f8f8;
+}
+
+main {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+}
+
+.page-content {
+  padding: 50px;
+  border: 1px solid #ddd;
+  border-radius: var(--radius);
+  background: var(--content-background);
 }

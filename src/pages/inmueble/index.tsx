@@ -1,6 +1,8 @@
 import Head from "next/head"
-import style from "./style"
+import style from "./styles"
 import { Inmuebles } from '@/services/inmueble'
+import TableInmueble from "@/components/tables/TableInmueble"
+import Link from "next/link"
 
 export default function Inmueble({ data }): JSX.Element {
 
@@ -8,21 +10,13 @@ export default function Inmueble({ data }): JSX.Element {
     <>
       <Head>
         <title>admin - inmueble</title>
-        <meta name="description" content="inmueble" />
+        <meta name="description" content="real estate administrative panel" />
       </Head>
       <main>
-        <table>
-          <tbody>
-            {
-              data.map(inmueble =>
-                <tr key={inmueble.id}>
-                  <td>{inmueble.bloque}</td>
-                  <td>{inmueble.numero}</td>
-                </tr>
-              )
-            }
-          </tbody>
-        </table>
+        <div className='page-content'>
+          <Link href='/inmueble/create'>crear</Link>
+          <TableInmueble data={data} />
+        </div>
       </main>
       <style jsx>{style}</style>
     </>
