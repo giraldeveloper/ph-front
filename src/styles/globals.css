@@ -1,6 +1,7 @@
 :root {
   --content-background: #fdfdfd;
-  --radius: 10px;
+  --radius: 16px;
+  --secondary-color: #488DFF;
 }
 
 html,
@@ -9,17 +10,84 @@ body {
   padding: 0;
   box-sizing: border-box;
   background: #f8f8f8;
+  overflow: hidden;
 }
 
 main {
   display: grid;
   min-height: 100vh;
+  width: 100%;
   place-items: center;
+  font-size: 15px;
 }
 
-.page-content {
-  padding: 50px;
+table {
+  border-collapse: collapse;
+  text-align: center;
+  width: 100%;
+}
+
+tr:nth-child(odd) {
+  background: #f7f7f7;
+}
+
+tr:first-child {
+  background: #eee;
+  font-weight: 600;
+}
+
+td {
+  padding: 5px 5px;
+}
+
+a {
+  text-decoration: none;
+  color: #111;
+}
+
+.link {
+  background: #99F6FF;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: var(--radius);
+}
+
+.link {
+  position: absolute;
+  top: -10px;
+  left: -20px;
+}
+
+.link:focus {
+  opacity: .7;
+}
+
+.section {
+  padding: 30px;
   border: 1px solid #ddd;
   border-radius: var(--radius);
   background: var(--content-background);
+}
+
+.form-create-inmueble {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.form-create-inmueble input,
+.form-create-inmueble select,
+.form-create-inmueble button {
+  border: 1px solid #ddd;
+  outline: none;
+  padding: 0 15px;
+  border-radius: var(--radius);
+  background: #f7f7f7;
+  font-size: 15px;
+  height: 15%;
+}
+
+.form-create-inmueble button[disabled] {
+  background: red;
 }
