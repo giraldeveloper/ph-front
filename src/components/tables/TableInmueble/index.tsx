@@ -7,32 +7,23 @@ export default function TableInmueble({ data }) {
 
   const [people, setPeople] = useState(data)
   const [open, setOpen] = useState(false)
-  const [id, setID] = useState('')
-  const [bloque, setBloque] = useState('')
-  const [numero, setNumero] = useState('')
-  const [tipo, setTipo] = useState('')
-  const [activo, setActivo] = useState(true)
-  const [index, setIndex] = useState(1)
+  const [person, setPerson] = useState({})
 
-  const onSubmitForm = (value: string) => {
-    const array = [...people]
-    array[index] = value
-    setPeople(array)
-    setOpen(!open)
+  const refreshTable = () => {
+    Inmuebles.getInmuebles()
+      .then(data => {
+        setPeople(data)
+
+      })
   }
 
-  const handleClickUpdate = (id: string,
-    bloque: string,
-    numero: string,
-    tipo: string,
-    activo: boolean,
-    index: number) => {
-    setID(id)
-    setBloque(bloque)
-    setNumero(numero)
-    setTipo(tipo)
-    setActivo(activo)
-    setIndex(index)
+  const onSubmitForm = () => {
+    setOpen(!open)
+    refreshTable()
+  }
+
+  const handleClickUpdate = (person: IInmueble) => {
+    setPerson(person)
     setOpen(!open)
   }
 
@@ -43,8 +34,7 @@ export default function TableInmueble({ data }) {
       .then(status => {
         console.log(status);
       })
-    const newArray = people.filter((elem: IInmueble) => elem.id !== id)
-    setPeople(newArray)
+    refreshTable()
   }
 
   return (
@@ -63,32 +53,28 @@ export default function TableInmueble({ data }) {
               <td>Opciones</td>
             </tr>
             {
-              people.map(({ id, bloque, numero, tipo, usuarioSistema, fechaCreacion, fechaModificacion, activo }: IInmueble, index: number) =>
-                <tr key={id}>
-                  <td>{bloque}</td>
-                  <td>{numero}</td>
-                  <td>{tipo}</td>
-                  <td>{usuarioSistema ?? 'no registra'}</td>
-                  <td>{new Date(fechaCreacion).toLocaleDateString()}</td>
-                  <td>{new Date(fechaModificacion).toLocaleDateString()}</td>
-                  <td>{activo ? 'activo' : 'inactivo'}</td>
+              people.map((person: IInmueble) =>
+                <tr key={person.id}>
+                  <td>{person.bloque}</td>
+                  <td>{person.numero}</td>
+                  <td>{person.tipo}</td>
+                  <td>{person.usuarioSistema ?? 'no registra'}</td>
+                  <td>{new Date(person.fechaCreacion).toLocaleDateString()}</td>
+                  <td>{new Date(person.fechaModificacion).toLocaleDateString()}</td>
+                  <td>{person.activo ? 'activo' : 'inactivo'}</td>
                   <td>
-                    <button onClick={() => handleClickUpdate(
-                      id,
-                      bloque,
-                      numero,
-                      tipo,
-                      activo,
-                      index
-                    )}>actualizar</button>
-                    <button onClick={() => handleClickDelete(id)}>eliminar</button>
+                    <button onClick={() => handleClickUpdate(person)}>actualizar</button>
+                    <button onClick={() => handleClickDelete(person.id)}>eliminar</button>
                   </td>
                 </tr>
               )
             }
           </tbody>
         </table>
-        <ModalUpdateInmueble bloque={bloque} numero={numero} tipo={tipo} id={id} activo={activo} open={open} onSubmitForm={onSubmitForm} />
+        <ModalUpdateInmueble
+          person={person}
+          open={open}
+          onSubmitForm={onSubmitForm} />
 
       </div>
       <style jsx>{`

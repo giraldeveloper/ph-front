@@ -2,13 +2,11 @@ import { IInmueble, IPostInmueble } from "./interfaces"
 
 export class Inmuebles {
 
-  public static getInmuebles(): Promise<IInmueble[]> {
-    return fetch('http://localhost:5001/v1/inmueble')
-      .then(res => res.json())
-      .then(response => {
-        const { data } = response
-        return data
-      })
+  public static async getInmuebles(): Promise<IInmueble[]> {
+    const res = await fetch('http://localhost:5001/v1/inmueble')
+    const response = await res.json()
+    const { data } = response
+    return data
   }
 
   public static async createInmueble(inmueble: IPostInmueble): Promise<string> {
@@ -20,11 +18,9 @@ export class Inmuebles {
         "Content-Type": "application/json"
       }
     }
-    console.log(inmueble);
 
     const res = await fetch('http://localhost:5001/v1/inmueble', options)
     const response = await res.json()
-    console.log(response);
 
     const { code } = response
     return code
@@ -45,9 +41,6 @@ export class Inmuebles {
 
   public static async updateInmueble(id: string, inmueble: IPostInmueble) {
 
-    console.log(inmueble);
-
-
     const options = {
       method: 'PATCH',
       body: JSON.stringify({ ...inmueble, "propietarios": [], "apoderados": [], "residentes": [] }),
@@ -57,8 +50,6 @@ export class Inmuebles {
     }
     const res = await fetch(`http://localhost:5001/v1/inmueble/${id}`, options)
     const response = await res.json()
-    console.log(response);
-
     const { code } = response
     return code
   }

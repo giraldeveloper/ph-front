@@ -4,7 +4,15 @@ import { Inmuebles } from "@/services/inmueble";
 import { alertInvalidInfo, alertActionSuccess } from "@/utilities/alerts";
 import { useRouter } from "next/router";
 
-export default function FormCreateInmueble({ method = 'POST', bloque = '', numero = '', tipo = 'APARTAMENTO', activo = true, id = '', onSubmitForm = (data) => { } }) {
+export default function FormCreateInmueble({ method = 'POST',
+  person = {
+    id: '',
+    bloque: '',
+    numero: '',
+    tipo: 'APARTAMENTO',
+    activo: true
+  },
+  onSubmitForm = () => { } }) {
 
   const router = useRouter()
 
@@ -25,36 +33,25 @@ export default function FormCreateInmueble({ method = 'POST', bloque = '', numer
       return
     }
 
-    const activo = values.active === 'activo'
+    const activo = values.activo === 'activo'
+    const data = { ...values, activo }
 
-    if (method === 'POST') {
-      Inmuebles.createInmueble({ ...values, activo })
-        .then(status => {
-          if (status === 'OK') {
-            alertActionSuccess()
-            router.push('/inmueble')
-            actions.resetForm()
-          } else {
-            alertInvalidInfo('algo salio mal')
-          }
-        })
-      return
-    }
-    if (method === 'PATCH') {
-      const data = { ...values, activo }
-      Inmuebles.updateInmueble(id, data)
-        .then(status => {
-          if (status === 'OK') {
-            alertActionSuccess()
-            router.push('/inmueble')
-            actions.resetForm()
-            onSubmitForm({ ...data, id })
-          } else {
-            alertInvalidInfo('algo salio mal')
-          }
-        })
-      return
-    }
+    const action = method === 'POST'
+      ?
+      Inmuebles.createInmueble(data)
+      :
+      Inmuebles.updateInmueble(person.id, data)
+    action.then(status => {
+      if (status === 'OK') {
+        actions.resetForm()
+        onSubmitForm()
+        router.push('/inmueble')
+      }
+      else {
+        alertInvalidInfo('algo salio mal')
+      }
+    })
+
   }
 
   const handleClickPersona = (e) => {
@@ -62,10 +59,10 @@ export default function FormCreateInmueble({ method = 'POST', bloque = '', numer
   }
 
   const initialValuesForm = {
-    bloque,
-    numero,
-    tipo,
-    activo: activo ? 'activo' : 'inactivo',
+    bloque: person.bloque,
+    numero: person.numero,
+    tipo: person.tipo,
+    activo: person.activo ? 'activo' : 'inactivo',
   }
 
   return (

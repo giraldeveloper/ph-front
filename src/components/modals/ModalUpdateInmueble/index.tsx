@@ -1,13 +1,13 @@
 import FormCreateInmueble from "@/components/forms/FormCreateInmueble"
 
-export default function ModalUpdateInmueble({ bloque, numero, tipo, id, activo, open, onSubmitForm }) {
+export default function ModalUpdateInmueble({ person, open, onSubmitForm }) {
   return (
     open
       ?
       <>
-        <div className="container" hidden={true}>
+        <div className="container">
           <div className="section">
-            <FormCreateInmueble method="PATCH" bloque={bloque} numero={numero} tipo={tipo} activo={activo} id={id} onSubmitForm={onSubmitForm} />
+            <FormCreateInmueble method="PATCH" person={person} onSubmitForm={onSubmitForm} />
           </div>
         </div>
         <style jsx>{`
