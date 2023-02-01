@@ -27,7 +27,7 @@ export default function DeleteFormAlert({ active, setActive, id, refreshTable })
             <h3 className="text-sm font-medium text-red-800">Eliminar inmueble</h3>
             <div className="mt-2 text-sm text-red-700">
               <p>
-                ¿estas seguro de eliminar este inmueble?
+                ¿Estas seguro de eliminar este inmueble?
               </p>
             </div>
             <div className='flex justify-around mt-2'>
