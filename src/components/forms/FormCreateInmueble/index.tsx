@@ -81,7 +81,7 @@ export default function Example() {
               </div>
               <div>
                 <label htmlFor="last-name" className="block text-sm font-medium text-gray-700">
-                  Numero
+                  Número
                 </label>
                 <div className="mt-1">
                   <Field
