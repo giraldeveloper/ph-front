@@ -29,8 +29,6 @@ export default function Example() {
     return true
   }
 
-  const [alert, setAlert] = useState()
-
   const onSubmitForm = (values, actions) => {
     if (!validateForm(values)) {
       return
@@ -42,14 +40,22 @@ export default function Example() {
     Inmuebles.createInmueble(data)
       .then(status => {
         if (status === 'OK') {
-          alertActionSuccess()
-          actions.resetForm()
-          router.push('/inmueble')
+          setActive(true)
+          setTimeout(async () => {
+            await router.push('/inmueble')
+            actions.resetForm()
+          }, 1500)
         }
         else {
           alertInvalidInfo('algo salio mal')
         }
       })
+  }
+
+  const [active, setActive] = useState(false)
+
+  const handleClickClose = () => {
+    setActive(false)
   }
 
   return (
@@ -118,92 +124,10 @@ export default function Example() {
             </Form>
           </Formik>
         </div>
+
       </div>
+      <SaveFormAlert active={active} handleClickClose={handleClickClose} />
     </div>
+
   )
 }
-
-// export default function FormCreateInmueble({
-//   method = 'POST',
-//   person = {
-//     id: '',
-//     bloque: '',
-//     numero: '',
-//     tipo: 'APARTAMENTO',
-//     activo: true
-//   },
-//   onSubmitForm = () => { }
-// }) {
-
-//   const router = useRouter()
-
-//   const validateForm = (values: IPostInmueble) => {
-//     if (values.bloque === '') {
-//       alertInvalidInfo('por favor ingresa un bloque')
-//       return false
-//     }
-//     if (values.numero === '') {
-//       alertInvalidInfo('por favor ingresa un numero')
-//       return false
-//     }
-//     return true
-//   }
-
-//   const handleSubmitForm = (values, actions) => {
-//     if (!validateForm(values)) {
-//       return
-//     }
-
-//     const activo = values.activo === 'activo'
-//     const data = { ...values, activo }
-
-//     const action = method === 'POST'
-//       ?
-//       Inmuebles.createInmueble(data)
-//       :
-//       Inmuebles.updateInmueble(person.id, data)
-//     action.then(status => {
-//       if (status === 'OK') {
-//         alertActionSuccess()
-//         actions.resetForm()
-//         onSubmitForm()
-//         router.push('/inmueble')
-//       }
-//       else {
-//         alertInvalidInfo('algo salio mal')
-//       }
-//     })
-
-//   }
-
-//   const initialValuesForm = {
-//     bloque: person.bloque,
-//     numero: person.numero,
-//     tipo: person.tipo,
-//     activo: person.activo ? 'activo' : 'inactivo',
-//   }
-
-//   return (
-//     <>
-//       <Formik initialValues={initialValuesForm} onSubmit={handleSubmitForm}>
-//         <Form className="form-create-inmueble">
-//           <label htmlFor="bloque">bloque</label>
-//           <Field name="bloque" type="text" />
-//           <label htmlFor="numero">numero</label>
-//           <Field name="numero" type="text" />
-//           <label htmlFor="tipo">tipo de inmueble</label>
-//           <Field name="tipo" as='select' >
-//             <option value="APARTAMENTO">apartamento</option>
-//             <option value="CASA">casa</option>
-//           </Field>
-//           <label htmlFor="activo">estado</label>
-//           <Field name="activo" as='select' >
-//             <option value="activo">activo</option>
-//             <option value="inactivo">inactivo</option>
-//           </Field>
-//           <button type="submit" >guardar</button>
-//         </Form>
-//       </Formik>
-//     </>
-//   )
-// }

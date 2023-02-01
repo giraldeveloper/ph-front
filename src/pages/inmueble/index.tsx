@@ -1,7 +1,6 @@
 import Head from "next/head"
 import { Inmuebles } from '@1/services/inmueble'
 import TableInmueble from "@1/components/tables/TableInmueble"
-import Link from "next/link"
 
 export default function Inmueble({ data }): JSX.Element {
 

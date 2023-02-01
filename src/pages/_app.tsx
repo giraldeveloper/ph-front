@@ -7,11 +7,7 @@ import {
   Bars3BottomLeftIcon,
   BellIcon,
   TruckIcon,
-  CalendarIcon,
-  ChartBarIcon,
-  FolderIcon,
   HomeIcon,
-  InboxIcon,
   UsersIcon,
   XMarkIcon,
   BuildingOffice2Icon

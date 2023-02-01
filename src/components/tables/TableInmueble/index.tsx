@@ -2,13 +2,15 @@ import { IInmueble } from "@1/services/interfaces"
 import { Inmuebles } from "@1/services/inmueble"
 import { useState } from "react";
 import Link from "next/link";
-import ModalUpdateInmueble from "@1/components/modals/ModalUpdateInmueble";
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { PlusIcon as PlusIconMini } from '@heroicons/react/20/solid'
+import DeleteFormAlert from "@1/components/alerts/DeleteFormAlert";
 
 export default function TableInmueble({ data }) {
 
   const [people, setPeople] = useState(data)
+  const [active, setActive] = useState(false)
+  const [id, setId] = useState('')
 
   const refreshTable = () => {
     Inmuebles.getInmuebles()
@@ -18,14 +20,13 @@ export default function TableInmueble({ data }) {
   }
 
   const handleClickDelete = (id: string) => {
-    Inmuebles.deleteInmueble(id)
-      .then(() => {
-        refreshTable()
-      })
+    setActive(true)
+    setId(id)
   }
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8">
+    <div className="px-4 sm:px-6 lg:px-8 relative ">
+      <DeleteFormAlert active={active} setActive={setActive} id={id} refreshTable={refreshTable} />
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-xl font-semibold text-gray-900">Inmuebles</h1>
@@ -74,6 +75,7 @@ export default function TableInmueble({ data }) {
                 <tbody className="divide-y divide-gray-200 bg-white">
                   {people.map((inmueble: IInmueble) => (
                     <tr key={inmueble.id}>
+
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-center sm:pl-6">
                         <div className="ml-4">
                           <div className="font-medium text-gray-900">{inmueble.bloque}</div>
@@ -140,91 +142,3 @@ export default function TableInmueble({ data }) {
     </div>
   )
 }
-
-// export default function TableInmueble({ data }) {
-
-//   const [people, setPeople] = useState(data)
-//   const [open, setOpen] = useState(false)
-//   const [person, setPerson] = useState({})
-
-//   const refreshTable = () => {
-//     Inmuebles.getInmuebles()
-//       .then(data => {
-//         setPeople(data)
-//       })
-//   }
-
-//   const onSubmitForm = () => {
-//     setOpen(!open)
-//     refreshTable()
-//   }
-
-//   const handleClickUpdate = (person: IInmueble) => {
-//     setPerson(person)
-//     setOpen(!open)
-//   }
-
-// //   const handleClickDelete = (id: string) => {
-// //     console.log(id);
-
-// //     Inmuebles.deleteInmueble(id)
-// //       .then(() => {
-// //         refreshTable()
-// //       })
-// //   }
-
-//   return (
-//     <>
-//       <div>
-//         <table>
-//           <tbody>
-//             <tr className="tr-fixed">
-//               <td>Bloque</td>
-//               <td>Numero</td>
-//               <td>Tipo</td>
-//               <td>Usuario Sistema</td>
-//               <td>Fecha Creacion</td>
-//               <td>Fecha Modificacion</td>
-//               <td>Estado</td>
-//               <td>Opciones</td>
-//             </tr>
-//             {
-//               people.map((person: IInmueble) =>
-//                 <tr key={person.id}>
-//                   <td>{person.bloque}</td>
-//                   <td>{person.numero}</td>
-//                   <td>{person.tipo}</td>
-//                   <td>{person.usuarioSistema ?? 'no registra'}</td>
-//                   <td>{new Date(person.fechaCreacion).toLocaleDateString()}</td>
-//                   <td>{new Date(person.fechaModificacion).toLocaleDateString()}</td>
-//                   <td>{person.activo ? 'activo' : 'inactivo'}</td>
-//                   <td>
-//                     <Link href={`/inmueble:${person.id}`}></Link>
-//                   </td>
-//                 </tr>
-//               )
-//             }
-//           </tbody>
-//         </table>
-//         <ModalUpdateInmueble
-//           person={person}
-//           open={open}
-//           onSubmitForm={onSubmitForm} />
-
-//       </div>
-//       <style jsx>{`
-//         div{
-//           max-height: 100%;
-//           overflow-y: scroll;
-//           outline: 1px solid #ccc;
-//         }
-
-//         .tr-fixed{
-//           position: sticky;
-//           top: 0px;
-//           outline: 1px solid #ccc;
-//         }
-//       `}</style>
-//     </>
-//   )
-// }
