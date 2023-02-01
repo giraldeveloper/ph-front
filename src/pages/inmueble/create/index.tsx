@@ -1,5 +1,5 @@
 import Head from "next/head";
-import FormCreateInmueble from "@/components/forms/FormCreateInmueble";
+import FormCreateInmueble from "@1/components/forms/FormCreateInmueble";
 
 export default function Create(): JSX.Element {
 
@@ -18,9 +18,8 @@ export default function Create(): JSX.Element {
       </main>
       <style jsx>{`
         .container{
-          height: 60vh;
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
         }
 
       `}</style>

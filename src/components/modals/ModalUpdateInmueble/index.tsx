@@ -1,4 +1,4 @@
-import FormCreateInmueble from "@/components/forms/FormCreateInmueble"
+import FormCreateInmueble from "@1/components/forms/FormCreateInmueble"
 
 export default function ModalUpdateInmueble({ person, open, onSubmitForm }) {
   return (
