@@ -1,19 +1,10 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx}",
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-
-    // Or if using `src` directory:
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./src/**/*.{html,js}"],
   theme: {
+    fontFamily: {
+      lato: 'Lato',
+    },
     extend: {},
   },
-  plugins: [
-    import('@tailwindcss/forms'),
-    import('@headlessui/react'),
-    import('@heroicons/react')
-  ],
-};
+  plugins: [],
+}
